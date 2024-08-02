@@ -59,12 +59,6 @@ void get_color() {
     cout << color[mid] << endl;
 }
 
-int find_root() {
-    for(int i=1; i<=MAX; i++) {
-        if(p[i] != -1) continue;
-        if(adj[i].size() != 0) return i;
-    }
-}
 
 int ans;
 set<int> dfs_score(int curr) {
@@ -85,10 +79,15 @@ set<int> dfs_score(int curr) {
     return ret;
 }
 void get_score() {
-    int rid = find_root();
 
     ans = 0;
-    dfs_score(rid);
+    for(int i=1; i<=MAX; i++) {
+        if(p[i] != -1) continue;
+        if(adj[i].size() != 0) {
+            dfs_score(i);
+        }
+    }
+
 
     cout << ans << endl;
 }
