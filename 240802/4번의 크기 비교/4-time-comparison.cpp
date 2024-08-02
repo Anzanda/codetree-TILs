@@ -14,7 +14,7 @@ int main() {
     ans.push_back(a > e ? 1 : 0);
 
     for(auto a : ans ) {
-        cout<< ans << endl;
-    }
+        cout << a << endl;
+    } 
     return 0;
 }
