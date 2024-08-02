@@ -83,7 +83,7 @@ void get_score() {
     ans = 0;
     for(int i=1; i<=MAX; i++) {
         if(p[i] != -1) continue;
-        if(adj[i].size() != 0) {
+        if(adj[i].size() != 0 || color[i] != 0) {
             dfs_score(i);
         }
     }
