@@ -8,7 +8,7 @@ const int MAX = 70+7;
 int n, m, k;
 int dr[4] = {-1, 0, 1, 0};
 int dc[4] = {0, 1, 0, -1};
-int golem[MAX][MAX];
+bool golem[MAX][MAX];
 bool is_golem_range(int r, int c) {
     return r >= 0 && r <= n-1 && c >= 2 && c <= m-1;
 }
@@ -47,7 +47,7 @@ void run() {
     int r, c, d;
     cin >> c >> d;
 
-    r = 0;
+    r = 1;
     
     bool alive = true;
     while(alive) {
@@ -82,7 +82,7 @@ void run() {
     dfs(r + dr[d], c + dc[d]);
     
     ans += tmp_ans;
-    
+
     golem[r][c] = true;
     for(int i=0; i<4; i++) {
         int nr = r + dr[i];
