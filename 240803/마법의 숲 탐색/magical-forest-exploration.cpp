@@ -8,7 +8,8 @@ const int MAX = 70+7;
 int n, m, k;
 int dr[4] = {-1, 0, 1, 0};
 int dc[4] = {0, 1, 0, -1};
-bool golem[MAX][MAX];
+int golem[MAX][MAX];
+bool is_exit[MAX][MAX];
 bool is_golem_range(int r, int c) {
     return r >= -1 && r <= n-1 && c >= 2 && c <= m-1;
 }
@@ -21,7 +22,7 @@ bool is_valid(int r, int c) {
         int nr = r + dr[i];
         int nc = c + dc[i];
         if(nr <= -1) continue;
-        if(golem[nr][nc]) return false;
+        if(golem[nr][nc] != -1) return false;
     }    
     return true;
 }
@@ -71,16 +72,25 @@ void run() {
     }
 
     if(!can_alive(r, c)) {
-        memset(golem, false, sizeof golem);
+        memset(golem, -1, sizeof golem);
+        memset(is_exit, false, sizeof is_exit);
         return;
     }
 
 
     tmp_ans = r + 1;
 
+    golem[r][c] = k;
+    for(int i=0; i<4; i++) {
+        int nr = r + dr[i];
+        int nc = c + dc[i];
+        golem[nr][nc] = k;
+    }
+    is_exit[r+dr[d]][c+dc[d]] = true;
+
     memset(vst, false, sizeof vst);
     queue<pii> q;
-    q.push(pii(r+dr[d], c+dc[d]));
+    q.push(pii(r, c));
     while(q.size()) {
         auto [rr, cc] = q.front();
         q.pop();
@@ -92,25 +102,21 @@ void run() {
             int nc = cc + dc[i];
             if(!is_range(nr, nc)) continue;
             if(vst[nr][nc]) continue;
-            if(!golem[nr][nc]) continue;
-            
-            q.push(pii(nr, nc));
+            if((golem[rr][cc] == golem[nr][nc]) || (is_exit[rr][cc] && golem[nr][nc] != -1)) 
+                q.push(pii(nr, nc));
         }
     }
     
-    
+    // printf("tmp_ans: %d\n", tmp_ans);
+    // printf("r: %d, c: %d\n", r, c);
     ans += tmp_ans;
 
-    golem[r][c] = true;
-    for(int i=0; i<4; i++) {
-        int nr = r + dr[i];
-        int nc = c + dc[i];
-        golem[nr][nc] = true;
-    }
+  
     
 }
 int main(void) {
     cin >> n >> m >> k;
+    memset(golem, -1, sizeof golem);
     while(k--) {
         run();
     }
