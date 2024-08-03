@@ -31,6 +31,8 @@ void dfs(int r, int c) {
     vst2[r][c] = true;
 
     tmp_ans = max(tmp_ans, r);
+    int dr[4] = {1, 0, 0 , -1};
+    int dc[4] = {0, 1, -1, 0};
     for(int i=0; i<4; i++) {
         int nr = r + dr[i];
         int nc = c + dc[i];
@@ -97,6 +99,7 @@ void run() {
     memset(vst2, false, sizeof vst2);
     dfs(r+dr[d], c+dc[d]);
     ans += tmp_ans;
+
     vst[r][c] = true;
     for(int i=0; i<4; i++) {
         int nr = r + dr[i];
