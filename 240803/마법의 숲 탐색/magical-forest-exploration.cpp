@@ -35,7 +35,6 @@ void dfs(int r, int c) {
         int nr = r + dr[i];
         int nc = c + dc[i];
         if(!is_range(nr, nc)) continue;
-        if(nr == 0) continue;
         if(!vst[nr][nc]) continue;
         if(vst2[nr][nc]) continue;
         dfs(nr, nc);
