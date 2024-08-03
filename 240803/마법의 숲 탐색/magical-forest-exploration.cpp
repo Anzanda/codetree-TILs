@@ -46,18 +46,18 @@ void run() {
 
     int r = 0;
     if(vst[r+1][c]) {
-       if(is_range(r, c-2) && (!vst[r+1][c-1])) {
-        c -= 1;
-        d = (d-1)%4;
-       }
-       else if(is_range(r, c+2) && (!vst[r+1][c+1])) {
-         c += 1;
-         d = (d+1)%4;
-       }
-       else {
+    //    if(is_range(r, c-2) && (!vst[r+1][c-1])) {
+    //     c -= 1;
+    //     d = (d-1)%4;
+    //    }
+    //    else if(is_range(r, c+2) && (!vst[r+1][c+1])) {
+    //      c += 1;
+    //      d = (d+1)%4;
+    //    }
+    //    else {
         memset(vst, false, sizeof vst);
         return;
-       }
+    //    }
     }
     
     // r == 0
