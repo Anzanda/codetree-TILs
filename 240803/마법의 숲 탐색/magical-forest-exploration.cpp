@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 #define endl '\n'
 using namespace std;
-
+using pii = pair<int,int>;
 const int MAX = 70+7;
 
 
@@ -31,18 +31,18 @@ bool vst[MAX][MAX];
 bool is_range(int r, int c) {
     return r>=1 && r<=n && c>=1 && c<=m;
 }
-void dfs(int r, int c) {
-    vst[r][c] = true;
-    tmp_ans = max(tmp_ans, r);
-    for(int i=0; i<4; i++) {
-        int nr = r + dr[i];
-        int nc = c + dc[i];
-        if(!is_range(nr, nc)) continue;
-        if(!golem[nr][nc]) continue;
-        if(vst[nr][nc]) continue;
-        dfs(nr, nc);
-    }
-}
+// void dfs(int r, int c) {
+//     vst[r][c] = true;
+//     tmp_ans = max(tmp_ans, r);
+//     for(int i=0; i<4; i++) {
+//         int nr = r + dr[i];
+//         int nc = c + dc[i];
+//         if(!is_range(nr, nc)) continue;
+//         if(!golem[nr][nc]) continue;
+//         if(vst[nr][nc]) continue;
+//         dfs(nr, nc);
+//     }
+// }
 void run() {
     int r, c, d;
     cin >> c >> d;
@@ -79,7 +79,25 @@ void run() {
     tmp_ans = r + 1;
 
     memset(vst, false, sizeof vst);
-    dfs(r + dr[d], c + dc[d]);
+    queue<pii> q;
+    q.push(pii(r+dr[d], c+dc[d]));
+    while(q.size()) {
+        auto [rr, cc] = q.front();
+        q.pop();
+
+        vst[rr][cc] = true;
+        tmp_ans = max(tmp_ans, rr);
+        for(int i=0;  i<4; i++) {
+            int nr = rr + dr[i];
+            int nc = cc + dc[i];
+            if(!is_range(nr, nc)) continue;
+            if(vst[nr][nc]) continue;
+            if(!golem[nr][nc]) continue;
+            
+            q.push(pii(nr, nc));
+        }
+    }
+    
     
     ans += tmp_ans;
 
