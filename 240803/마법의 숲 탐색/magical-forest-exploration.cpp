@@ -83,9 +83,14 @@ void run() {
         }
         alive = false;
     }
-    if(r-1 < 1) {
-        memset(vst, false, sizeof vst);
-        return;
+
+    for(int i=0; i<4; i++) {
+        int nr = r + dr[i];
+        int nc = c + dc[i];
+        if(!is_range(nr, nc) || nr == 0) {
+            memset(vst, false, sizeof vst);
+            return;
+        }
     }
 
     tmp_ans = r+1;
