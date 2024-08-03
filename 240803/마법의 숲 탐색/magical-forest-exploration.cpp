@@ -59,7 +59,7 @@ void run() {
         if(is_valid(r, c-1) && is_valid(r+1, c-1)) {
             r++;
             c--;
-            d = (d-1)%4;
+            d = (d+3)%4;
             continue;
         }
         if(is_valid(r, c+1) && is_valid(r+1, c+1)) {
