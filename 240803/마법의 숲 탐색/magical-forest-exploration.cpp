@@ -10,7 +10,7 @@ int dr[4] = {-1, 0, 1, 0};
 int dc[4] = {0, 1, 0, -1};
 bool golem[MAX][MAX];
 bool is_golem_range(int r, int c) {
-    return r >= 0 && r <= n-1 && c >= 2 && c <= m-1;
+    return r >= -1 && r <= n-1 && c >= 2 && c <= m-1;
 }
 bool can_alive(int r, int c) {
     return r >= 2 && r <= n-1 && c >= 2 && c <= m-1;
@@ -47,7 +47,7 @@ void run() {
     int r, c, d;
     cin >> c >> d;
 
-    r = 1;
+    r = -1;
     
     bool alive = true;
     while(alive) {
