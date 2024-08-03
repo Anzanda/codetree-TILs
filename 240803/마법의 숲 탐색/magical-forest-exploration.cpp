@@ -18,7 +18,7 @@ bool is_valid(int r, int c) {
     for(int i=0; i<4; i++) {
         int nr = r + dr[i];
         int nc = c + dc[i];
-        if(nr < 0) continue;
+        if(nr <= 0) continue;
         if(!is_range(nr, nc)) return false;
         if(vst[nr][nc]) return false;
     }
@@ -31,8 +31,7 @@ void dfs(int r, int c) {
     vst2[r][c] = true;
 
     tmp_ans = max(tmp_ans, r);
-    int dr[4] = {1, 0, 0 , -1};
-    int dc[4] = {0, 1, -1, 0};
+
     for(int i=0; i<4; i++) {
         int nr = r + dr[i];
         int nc = c + dc[i];
@@ -48,18 +47,18 @@ void run() {
 
     int r = 0;
     if(vst[r+1][c]) {
-    //    if(is_range(r, c-2) && (!vst[r+1][c-1])) {
-    //     c -= 1;
-    //     d = (d-1)%4;
-    //    }
-    //    else if(is_range(r, c+2) && (!vst[r+1][c+1])) {
-    //      c += 1;
-    //      d = (d+1)%4;
-    //    }
-    //    else {
+       if(is_range(r, c-2) && (!vst[r+1][c-1])) {
+        c -= 1;
+        d = (d-1)%4;
+       }
+       else if(is_range(r, c+2) && (!vst[r+1][c+1])) {
+         c += 1;
+         d = (d+1)%4;
+       }
+       else {
         memset(vst, false, sizeof vst);
         return;
-    //    }
+       }
     }
     
     // r == 0
