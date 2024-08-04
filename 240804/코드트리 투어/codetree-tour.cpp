@@ -160,7 +160,7 @@ void solve() {
 // 6:35 start
 int main()
 {
-    // cin.tie(0)->sync_with_stdio(0);
+    cin.tie(0)->sync_with_stdio(0);
     
     int q;
     cin >> q;
