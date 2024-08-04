@@ -27,6 +27,7 @@ void init() {
     dp = vector<int>(MAX, INF);
     
     cin >> n >> m;
+    vector<vector<int>> tmp_adj(MAX, vector<int>(MAX, INF));
     for(int i=1; i<=m; i++) {
         int v, u, w;
         cin >> v >> u >> w;
@@ -35,8 +36,16 @@ void init() {
         v++;
         u++;
         
-        adj[v].push_back(pii(u, w));
-        adj[u].push_back(pii(v, w));
+        tmp_adj[v][u] = min(tmp_adj[v][u], w);
+        tmp_adj[u][v] = min(tmp_adj[u][v], w);
+    }
+    
+    for(int i=1; i<=m; i++) {
+        for(int j=1; j<=m; j++) {
+            if(tmp_adj[i][j] != INF) {
+                adj[i].push_back(pii(j, tmp_adj[i][j]));
+            }
+        }
     }
 }
 
