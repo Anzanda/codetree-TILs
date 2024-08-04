@@ -21,7 +21,7 @@ int start;
 vector<pii> adj[MAX];
 vector<int> dp;
 pii goods[30007]; // 여행상품(수익, 목적지)
-bool used[30007]; // 여행상품 사용중?
+unordered_set<int> use;
 void init() {
     start = 1; // 초기에는 1부터 시작.
     dp = vector<int>(MAX, INF);
@@ -81,12 +81,14 @@ void add_goods() {
     dest++;
     
     goods[id] = pii(revenue, dest);
-    used[id] = true;
+    use.insert(id);
 }
 
 void remove_goods(int id) {
     if(id < 0) return;
-    used[id] = false;    
+    auto it = use.find(id);
+    if(it == use.end()) return;
+    use.erase(use.find(id));
 }
 
 void remove_goods() {
@@ -99,9 +101,7 @@ void remove_goods() {
 void sell_goods() {
     int sold_out = -1;
     int ans = -1;
-    for(int i=1; i<=GOODS_MAX; i++) {
-        if(!used[i]) continue;
-        
+    for(auto& i : use) {
         auto [revenue, dst] = goods[i];
         int cost = dp[dst];
         if(cost == INF)
@@ -114,6 +114,9 @@ void sell_goods() {
         if(ans < profit) {
             ans = profit;
             sold_out = i;
+        }
+        if(ans == profit) {
+            sold_out = min(sold_out, i);
         }
     }
     remove_goods(sold_out); 
@@ -157,7 +160,7 @@ void solve() {
 // 6:35 start
 int main()
 {
-    cin.tie(0)->sync_with_stdio(0);
+    // cin.tie(0)->sync_with_stdio(0);
     
     int q;
     cin >> q;
