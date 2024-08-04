@@ -21,7 +21,16 @@ int start;
 vector<pii> adj[MAX];
 vector<int> dp;
 pii goods[30007]; // 여행상품(수익, 목적지)
-unordered_set<int> use;
+
+auto compare = [](const pii& a, const pii& b) {
+        if (a.first == b.first) {
+            return a.second > b.second;
+        }
+        return a.first < b.first;
+};
+
+priority_queue<pii, vector<pii>, decltype(compare)> use(compare);
+bool used[GOODS_MAX];
 void init() {
     start = 1; // 초기에는 1부터 시작.
     dp = vector<int>(MAX, INF);
@@ -72,6 +81,20 @@ void dijkstra() {
             }
         }
     }
+    
+    
+    vector<pii> tmp;
+    while(use.size()) {
+        auto [cost, id] = use.top();
+        use.pop();
+        
+        auto [revenue, dest ] = goods[id];
+        tmp.push_back(pii(revenue-dp[dest], id));
+    }
+    for(auto& elem : tmp) {
+        auto [profit, id] = elem;
+        use.push(pii(profit, id));
+    }
 }
 
 void add_goods() {
@@ -81,14 +104,13 @@ void add_goods() {
     dest++;
     
     goods[id] = pii(revenue, dest);
-    use.insert(id);
+    used[id] = true;
+    use.push(pii(revenue-dp[dest], id));
 }
 
 void remove_goods(int id) {
     if(id < 0) return;
-    auto it = use.find(id);
-    if(it == use.end()) return;
-    use.erase(use.find(id));
+    used[id] = false;
 }
 
 void remove_goods() {
@@ -100,27 +122,23 @@ void remove_goods() {
 
 void sell_goods() {
     int sold_out = -1;
-    int ans = -1;
-    for(auto& i : use) {
-        auto [revenue, dst] = goods[i];
-        int cost = dp[dst];
-        if(cost == INF)
-            continue;
-            
-        int profit = revenue - cost;
-        if(profit < 0) // profit이 0이라면?
-            continue;
-        
-        if(ans < profit) {
-            ans = profit;
-            sold_out = i;
-        }
-        if(ans == profit) {
-            sold_out = min(sold_out, i);
-        }
-    }
-    remove_goods(sold_out); 
     
+    while(use.size()) {
+        auto [profit, id] = use.top();
+        if(!used[id]) {
+            use.pop();
+            continue;
+        }
+        if(profit < 0) break;
+        
+        use.pop();
+        
+        
+        sold_out = id;
+        break;
+    }
+    
+    remove_goods(sold_out); 
     cout << sold_out << endl;
 }
 
