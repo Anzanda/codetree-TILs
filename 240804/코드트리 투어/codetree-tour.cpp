@@ -40,8 +40,8 @@ void init() {
         tmp_adj[u][v] = min(tmp_adj[u][v], w);
     }
     
-    for(int i=1; i<=m; i++) {
-        for(int j=1; j<=m; j++) {
+    for(int i=1; i<=n; i++) {
+        for(int j=1; j<=n; j++) {
             if(tmp_adj[i][j] != INF) {
                 adj[i].push_back(pii(j, tmp_adj[i][j]));
             }
