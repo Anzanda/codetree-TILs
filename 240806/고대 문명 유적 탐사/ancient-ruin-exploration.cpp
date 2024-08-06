@@ -40,7 +40,6 @@ void rotate(int r, int c) {
 }
 
 int ans;
-int p_i;
 bool is_range(int r, int c) {
     return r>=1 && r<=n && c>=1 && c<=n;
 }
@@ -55,12 +54,12 @@ void bfs(int i, int j) {
     vector<pii> cand;
     
     queue<pii> q;
+    vst[i][j] = true;
     q.push(pii(i, j));
     while(q.size()) {
         auto [r, c] = q.front();
         q.pop();
         
-        vst[r][c] = true;
         cand.push_back(pii(r,c));
         ret++;
         
@@ -71,6 +70,7 @@ void bfs(int i, int j) {
             if(vst[nr][nc]) continue;
             if(a[nr][nc] != a[r][c]) continue;
             
+            vst[nr][nc] = true;
             q.push(pii(nr, nc));
         }
     }
@@ -83,6 +83,8 @@ void bfs(int i, int j) {
         updated = true;
     }
 }
+int curr_pi;
+int p_i;
 void update_a() {
     for(int j=1; j<=5; j++) {
         for(int i=5; i>=1; i--) {
@@ -95,7 +97,7 @@ void update_a() {
 // 시뮬레이션
 void gogo() {
     ans = 0;
-    p_i = 1;
+    p_i = curr_pi;
     
     updated = true;
     while(updated) {
@@ -114,6 +116,7 @@ int total_ans;
 int tmp_a[10][10];
 void letsgo() {
     // (i, j)를 중심으로 하고, k번 회전!
+    int pipi = 100;
     int ii = 100;
     int jj = 100;
     int kk = 100;
@@ -130,6 +133,7 @@ void letsgo() {
                     ii = i;
                     jj = j;
                     kk = k;
+                    pipi = p_i;
                     total_ans = ans;
                 }
                 if(total_ans == ans) {
@@ -137,6 +141,7 @@ void letsgo() {
                         ii = i;
                         jj = j;
                         kk = k;
+                        pipi = p_i;
                         total_ans = ans;
                     }
                     if(kk == k) {
@@ -144,6 +149,7 @@ void letsgo() {
                             ii = i;
                             jj = j;
                             kk = k;
+                            pipi = p_i;
                             total_ans = ans;
                         }
                         if(jj == j) {
@@ -151,6 +157,7 @@ void letsgo() {
                                ii = i;
                                jj = j;
                                kk = k;
+                            pipi = p_i;
                                 total_ans = ans;
                             }
                         }
@@ -169,6 +176,7 @@ void letsgo() {
         rotate(ii, jj); 
     }
     gogo();
+    curr_pi = pipi;
     cout << total_ans << ' ';
     
 }
@@ -186,6 +194,7 @@ int main()
         cin >> p[i];
     }
     
+    curr_pi = 1;
     while(k--) {
         letsgo();
     }
