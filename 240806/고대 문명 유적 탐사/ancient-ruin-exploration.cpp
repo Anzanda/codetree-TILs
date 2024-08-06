@@ -94,6 +94,18 @@ void update_a() {
         }
     }
 }
+void just_go() {
+    ans = 0;
+    p_i = curr_pi;
+    memset(vst, false, sizeof vst);
+    for(int i=1; i<=n; i++) {
+        for(int j=1; j<=n; j++) {
+            if(vst[i][j]) continue;
+            bfs(i, j);
+        }
+    }
+    update_a();
+}
 // 시뮬레이션
 void gogo() {
     ans = 0;
@@ -127,7 +139,8 @@ void letsgo() {
             for(int k=1; k<=3; k++) {
                 rotate(i, j);
                 memcpy(tmp_a, a, sizeof tmp_a);
-                gogo();
+                // gogo();
+                just_go();
                 memcpy(a, tmp_a, sizeof a);
                 if(total_ans < ans) {
                     ii = i;
@@ -176,8 +189,8 @@ void letsgo() {
         rotate(ii, jj); 
     }
     gogo();
-    curr_pi = pipi;
-    cout << total_ans << ' ';
+    curr_pi = p_i;
+    cout << ans << ' ';
     
 }
 int main()
