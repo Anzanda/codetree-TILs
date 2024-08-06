@@ -54,13 +54,14 @@ void bfs(int i, int j) {
     vector<pii> cand;
     
     queue<pii> q;
-    vst[i][j] = true;
     q.push(pii(i, j));
     while(q.size()) {
         auto [r, c] = q.front();
         q.pop();
+        if(vst[r][c]) continue;
         
         cand.push_back(pii(r,c));
+        vst[r][c] = true;
         ret++;
         
         for(int i=0; i<4; i++) {
@@ -70,7 +71,6 @@ void bfs(int i, int j) {
             if(vst[nr][nc]) continue;
             if(a[nr][nc] != a[r][c]) continue;
             
-            vst[nr][nc] = true;
             q.push(pii(nr, nc));
         }
     }
