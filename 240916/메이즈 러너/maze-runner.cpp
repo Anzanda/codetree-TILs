@@ -77,6 +77,9 @@ int get_min_len_of_square() {
        min_len = min(min_len, len);
    } 
    
+   if(min_len == 98765431) {
+       exit(10);
+   }
    return min_len;
 }
 bool is_square_ok(int r, int c, int len) {
@@ -116,6 +119,11 @@ void rotate() {
     int len = get_min_len_of_square();  
     
     auto [r, c] = get_square(len);
+    if(r == -1) {
+        cout << "HELLO" << endl;
+        K = 0;
+        return;
+    }
      
     int new_maze[MAXN][MAXN];
     pii new_loc[MAXM];
@@ -171,9 +179,6 @@ void go_second() {
     for(int i=1; i<=M; i++) {
         if(!is_alive[i]) continue;
         move(i);
-    }
-    if(is_done()) {
-        K = 0;
     }
     
     rotate();
