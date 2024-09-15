@@ -120,6 +120,7 @@ void rotate() {
     
     auto [r, c] = get_square(len);
     if(r == -1) {
+        cout << "len: "<< len << endl;
         cout << "HELLO" << endl;
         K = 0;
         return;
