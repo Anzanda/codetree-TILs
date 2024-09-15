@@ -172,6 +172,9 @@ void go_second() {
         if(!is_alive[i]) continue;
         move(i);
     }
+    if(is_done()) {
+        K = 0;
+    }
     
     rotate();
 }
