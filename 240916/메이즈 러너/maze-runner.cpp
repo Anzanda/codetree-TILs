@@ -176,14 +176,18 @@ bool is_done() {
 void go_second() {
     if(is_done()) {
         K = 0;
+        return;
     }
     for(int i=1; i<=M; i++) {
         if(!is_alive[i]) continue;
         move(i);
     }
+    
     if(is_done()) {
         K = 0;
+        return;
     }
+    
     rotate();
 }
 int main()
