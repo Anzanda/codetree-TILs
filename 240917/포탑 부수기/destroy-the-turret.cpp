@@ -260,14 +260,15 @@ void jungbi() {
     } 
 }
 bool is_finished() {
+    int cnt = 0;
     for(int i=1; i<=N; i++) {
         for(int j=1; j<=M; j++) {
             if(a[i][j] > 0) {
-                return false;
+                cnt++;
             }
         }
     }
-    return true;
+    return (cnt == 1);
 }
 void go_turn() {
     auto [r, c]= find_attacker();   
