@@ -280,11 +280,11 @@ void go_turn() {
     } else {
         potan(pii(r, c), defender);
     }
+    jungbi();
     if(is_finished()) {
         K = 0;
         return;
     }
-    jungbi();
 }
 int main()
 {
