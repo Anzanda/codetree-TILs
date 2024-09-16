@@ -78,7 +78,7 @@ pii find_attacker() {
     }
     return pii(-1, -1);
 }
-pii find_defender() {
+pii find_defender(pii attacker) {
     int max_attack = -12;
     for(int i=1; i<=N; i++) {
         for(int j=1; j<=M; j++) {
@@ -92,6 +92,7 @@ pii find_defender() {
         for(int j=1; j<=M; j++) {
             if(a[i][j] <= 0) continue;
             if(max_attack == a[i][j]) {
+                if(i == attacker.first && j == attacker.second) continue;
                 cand.push_back(pii(i, j));
             }
         }
@@ -272,7 +273,7 @@ bool is_finished() {
 }
 void go_turn() {
     auto [r, c]= find_attacker();   
-    pii defender = find_defender();
+    pii defender = find_defender(pii(r,c));
     
     attack_turn[r][c] = turn;
     a[r][c] += (N+M);
