@@ -272,10 +272,10 @@ bool is_finished() {
 }
 void go_turn() {
     auto [r, c]= find_attacker();   
+    pii defender = find_defender();
+    
     attack_turn[r][c] = turn;
     a[r][c] += (N+M);
-    
-    pii defender = find_defender();
     if(can_raser(pii(r, c), defender)) {
         do_raser(pii(r, c), defender); 
     } else {
@@ -286,6 +286,14 @@ void go_turn() {
         K = 0;
         return;
     }
+    // cout << "**********" << endl;
+    // for(int i=1; i<=N; i++) {
+    //     for(int j=1; j<=M; j++) {
+    //         cout << a[i][j] << ' ';
+    //     }
+    //     cout << endl;
+    // }
+    // cout << "**********" << endl;
 }
 int main()
 {
