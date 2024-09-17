@@ -158,6 +158,8 @@ int back_c[MAX][MAX];
 bool can_raser(pii attacker, pii defender) {
     bool vst[MAX][MAX];
     memset(vst, false, sizeof vst);
+    memset(back_r, 0, sizeof back_r);
+    memset(back_c, 0, sizeof back_c);
     
     queue<pii> q;
     q.push(attacker);
