@@ -242,6 +242,18 @@ void jungbi() {
         }
     }
 }
+bool is_finished() {
+    int cnt = 0;
+    for(int i=1; i<=N; i++) {
+        for(int j=1; j<=M; j++) {
+            if(a[i][j] <= 0) {
+                cnt++;
+            }
+        }
+    }
+    
+    return (cnt == 1);
+}
 void do_turn() {
    pii attacker = find_attacker();     
    pii defender = find_defender(attacker);
@@ -252,6 +264,11 @@ void do_turn() {
        go_raser(attacker, defender); 
     } else {
        potan(attacker, defender); 
+    }
+    
+    if(is_finished()) {
+        K = 0;
+        return;
     }
     
     jungbi();
