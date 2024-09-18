@@ -1,5 +1,6 @@
 #include <bits/stdc++.h>
 #define endl '\n'
+#define int long long
 #define ff first
 #define ss second
 #define INF 987654321
@@ -114,6 +115,7 @@ bool fight(int curr) {
     
     int curr_attack = base[curr] + player_gun[curr];
     int to_fight_attack = base[to_fight] + player_gun[to_fight];
+    
     int diff = abs(curr_attack - to_fight_attack);
     
     if(curr_attack > to_fight_attack) {
@@ -148,7 +150,7 @@ void go_round() {
        }
     }
 }
-int main(void) {
+signed main(void) {
    cin >> n >> m >> k; 
    for(int i=1; i<=n; i++) {
        for(int j=1; j<=n; j++) {
@@ -166,6 +168,18 @@ int main(void) {
    
    while(k--) {
        go_round();
+    //   cout << "******" << endl;
+    //   for(int i=1; i<=n; i++) {
+    //       for(int j=1; j<=n; j++) {
+    //           cout << gun[i][j].size() << ' ';
+    //       }
+    //       cout << endl;
+    //   }
+    //   cout << "******" << endl;
+    //   for(int i=1; i<=m; i++) {
+    //         printf("player%d: (%d, %d) | %d\n", i, loc[i].ff, loc[i].ss, player_gun[i]) ;
+    //   }
+    //   printf("=========\n");
    }
    
    for(int i=1; i<=m; i++) {
