@@ -109,8 +109,8 @@ void move(int r, int c) {
     pii head = find_head(r, c);
     pii tail = find_tail(r, c);
     
-    move_head(head);
     move_tail(tail);
+    move_head(head);
     
     check_vst(r, c);
 }
