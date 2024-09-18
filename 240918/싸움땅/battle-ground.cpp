@@ -1,6 +1,5 @@
 #include <bits/stdc++.h>
 #define endl '\n'
-#define int long long
 #define ff first
 #define ss second
 #define INF 987654321
@@ -49,7 +48,7 @@ void move_90(int curr) {
         return;
     }
     for(int i=1; i<=m; i++) {
-        if(m == curr) continue;
+        if(i == curr) continue;
         if(nr == loc[i].ff && nc == loc[i].ss) {
             dir[curr] = (dir[curr] + 4 + 1)%4;
             move_90(curr);
@@ -78,12 +77,13 @@ void get_a_gun(int curr) {
     } else {
         player_gun[curr] = gun[r][c].back();
         
+        gun[r][c].pop_back();
         // 여기 테스트 해야댐...
-        vector<int> new_gun;
-        for(int i=0; i<gun[r][c].size()-1; i++) {
-           new_gun.push_back(gun[r][c][i]); 
-        }
-        gun[r][c] = new_gun;
+        // vector<int> new_gun;
+        // for(int i=0; i<gun[r][c].size()-1; i++) {
+        //   new_gun.push_back(gun[r][c][i]); 
+        // }
+        // gun[r][c] = new_gun;
     }
     
 }
@@ -150,7 +150,7 @@ void go_round() {
        }
     }
 }
-signed main(void) {
+int main(void) {
    cin >> n >> m >> k; 
    for(int i=1; i<=n; i++) {
        for(int j=1; j<=n; j++) {
