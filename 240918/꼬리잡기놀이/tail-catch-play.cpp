@@ -23,30 +23,24 @@ bool is_range(int r, int c) {
     return r>=1 && r<=n && c>=1 && c<=n;
 }
 void check_vst(int r, int c) {
-    int nr, nc;
-    for(int i=0; i<4; i++) {
-        nr = r + dr[i];
-        nc = c + dc[i];
-        if(!is_range(nr, nc)) continue;
-        if(a[nr][nc] == 0) continue;
-        if(vst[nr][nc]) continue;
-        vst[nr][nc] = team_num;
-        
-        break;
-    }
-    while(!(nr == r && nc == c)) {
+    bool tmp_vst[MAXN][MAXN];
+    memset(tmp_vst, false, sizeof tmp_vst);
+    
+    queue<pii> q;
+    q.push(pii(r, c));
+    vst[r][c] = team_num;
+    while(q.size()) {
+        auto [r, c] = q.front();
+        q.pop();
         for(int i=0; i<4; i++) {
-            int nnr = nr + dr[i];
-            int nnc = nc + dc[i];
+            int nr = r + dr[i];
+            int nc = c + dc[i];
+            if(!is_range(nr, nc)) continue;
+            if(a[nr][nc] == 0) continue;
+            if(vst[nr][nc]) continue;
             
-            if(!is_range(nnr, nnc)) continue;
-            if(a[nnr][nnc] == 0) continue;
-            if(vst[nnr][nnc]) continue;
-            
-            vst[nnr][nnc] = team_num;
-            nr = nnr;
-            nc = nnc;
-            break;
+            vst[nr][nc] = team_num;
+            q.push(pii(nr,nc));
         }
     }
 }
@@ -137,6 +131,7 @@ pii find_ball_started() {
 void get_score(pii curr) {
     bool tmp_vst[MAXN][MAXN];
     memset(tmp_vst, false, sizeof tmp_vst);
+    
     auto [r, c] = find_head(curr.ff, curr.ss);
     
     int cnt = 1;
@@ -196,14 +191,6 @@ void go_round() {
     }
     
     throw_ball();
-    // cout << "*******" << endl;
-    // for(int i=1; i<=n; i++) {
-    //     for(int j=1; j<=n; j++) {
-    //         cout << a[i][j] << ' ';
-    //     }
-    //     cout << endl;
-    // }
-    // cout << "*******" << endl;
 }
 signed main(void) {
     cin >> n >> m >> k;
