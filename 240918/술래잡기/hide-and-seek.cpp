@@ -11,6 +11,7 @@ const int MAXM = 10000*7;
 int t;
 int ans;
 int n, m, h, k;
+bool is_dead[MAXM];
 pii run[MAXM];
 int run_dir[MAXM];
 int run_dir_mode[MAXM];
@@ -49,6 +50,7 @@ pii _move(int r, int c, int i) {
     }
 }
 void move_runner(int curr) {
+    if(is_dead[curr]) return;
     if(!can_move(curr)) {
         return; 
     }
@@ -119,8 +121,10 @@ void do_tag() {
         }
         
         for(int i=1; i<=m; i++) {
+            if(is_dead[i]) continue;
             if(run[i].ff == r && run[i].ss == c) {
                 ans += t;
+                is_dead[i] = true;
             }
         }
         
