@@ -34,6 +34,7 @@ bool is_range(int r, int c) {
 }
 void bfs(pii st, pii en) {
     memset(dist, -1, sizeof dist);
+    memset(back, 0, sizeof back);
     
     queue<pii> q;
     q.push(st);
@@ -43,9 +44,8 @@ void bfs(pii st, pii en) {
         auto [r, c] = q.front();
         q.pop();
         
-        if(r == en.first && c == en.second) {
+        if(r == en.first && c == en.second)
            break; 
-        }
         
         for(int i=0; i<4; i++) {
             int nr = r +dr[i];
@@ -108,6 +108,7 @@ void go_basecamp(int curr) {
             if(a[i][j] != 1) continue;
             if(!can_move[i][j]) continue;
             bfs(pii(i, j), pii(r, c));
+            if(dist[r][c] == -1) continue; //  ㅇㅇㅇㅇ
             min_dist = min(min_dist, dist[r][c]);
         }
     }
@@ -145,7 +146,6 @@ void go_time() {
 }
 int main()
 {
-    cin.tie(0)->sync_with_stdio(0);
     
     cin >> n >> m;
     for(int i=1; i<=n; i++) {
