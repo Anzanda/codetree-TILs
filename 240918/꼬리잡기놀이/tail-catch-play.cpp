@@ -135,21 +135,35 @@ void get_score(pii curr) {
     auto [r, c] = find_head(curr.ff, curr.ss);
     
     int cnt = 1;
-    while(!(r == curr.ff && c == curr.ss)) {
+    queue<pii> q;
+    q.push(pii(r,c));
+    tmp_vst[r][c] = true;
+    while(q.size()) {
+        auto [r, c] = q.front();
+        q.pop();
+        
+        if(r == curr.ff && c == curr.ss) {
+            break;
+        }
+        
         for(int i=0; i<4; i++) {
             int nr = r + dr[i];
-            int nc = c+ dc[i];
+            int nc = c + dc[i];
             if(!is_range(nr, nc)) continue;
             if(a[nr][nc] == 0) continue;
+            if(a[nr][nc] == 4) continue;
             if(tmp_vst[nr][nc]) continue;
+            if(a[nr][nc] == 3) continue; // 꼬리와 머리가 이어져있음...
             
-            r = nr;
-            c = nc;
-            tmp_vst[r][c] = true;
-            
+            tmp_vst[nr][nc] = true;
             cnt++;
-            break;
-        } 
+            
+            q.push(pii(nr, nc));
+        }
+    }
+    
+    if(a[curr.ff][curr.ss] == 3) {
+        cnt++;    
     }
     
     ans += (cnt*cnt); 
@@ -164,19 +178,29 @@ void change_dir(pii curr) {
 void throw_ball() {
     auto [r, c] = find_ball_started();
     
+    // while(is_range(r, c)) {
+    //     if(a[r][c] == 0 || a[r][c] == 4|| team_vst[vst[r][c]]) {
+    //         r = r + dr[dir];
+    //         c = c + dc[dir];
+    //     } else {
+    //         team_vst[vst[r][c]] = true; 
+    //         get_score(pii(r, c));
+    //         change_dir(pii(r, c));
+    //         break;
+    //     }
+    // }
     while(is_range(r, c)) {
-        if(a[r][c] == 0 || a[r][c] == 4|| team_vst[vst[r][c]]) {
-            r = r + dr[dir];
-            c = c + dc[dir];
-        } else {
-            team_vst[vst[r][c]] = true; 
-            get_score(pii(r, c));
-            change_dir(pii(r, c));
-        }
+        if(a[r][c] != 0 && a[r][c] != 4) {
+           get_score(pii(r,c)); 
+           change_dir(pii(r,c));
+           break;
+        }    
+        r = r + dr[dir];
+        c = c + dc[dir];
     }
 }
 void go_round() {
-    memset(vst, false, sizeof vst);
+    memset(vst, 0, sizeof vst);
     team_num = 0;
     memset(team_vst, false, sizeof team_vst);
     for(int i=1; i<=n; i++) {
@@ -186,6 +210,14 @@ void go_round() {
             move(i, j);
         }
     }
+    // cout << "******" << endl;
+    // for(int i=1; i<=n; i++) {
+    //     for(int j=1; j<=n; j++) {
+    //         cout << a[i][j] << ' ';
+    //     }
+    //     cout << endl;
+    // }
+    // cout << "******" << endl;
     if(team_num != m) {
         exit(-1);
     }
