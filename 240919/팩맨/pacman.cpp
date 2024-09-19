@@ -88,7 +88,7 @@ void dead(int r, int c) {
             is_dead[i] = true;
         }
     }
-    dead_turn[r][c] = 3;
+    dead_turn[r][c] = 4;
     monster_cnt[r][c] = 0;
 }
 void move_packman() {
