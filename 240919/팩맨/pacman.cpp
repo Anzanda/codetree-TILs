@@ -87,7 +87,7 @@ void dead(int r, int c) {
             is_dead[i] = true;
         }
     }
-    dead_cnt[r][c].push(pii(monster_cnt[r][c], 2)); // 2턴이 필요하다는데 정확한 예시가..
+    dead_cnt[r][c].push(pii(monster_cnt[r][c], 3)); // 2턴이 필요하다는데 정확한 예시가..
     monster_cnt[r][c] = 0;
 }
 void move_packman() {
@@ -225,8 +225,6 @@ void go_turn() {
     // return;
     manage_deads();
     hatch();
-    int live = 0;
-    int dead = 0;
     // for(int i=1; i<monster.size(); i++) {
     //     if(is_dead[i]) dead++;
     //     else live++;
