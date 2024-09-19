@@ -19,7 +19,7 @@ const int MAXM = 1e6+7;
 int m, t;
 pii packman;
 int monster_cnt[5][5];
-queue<pii> dead_cnt[5][5];
+int dead_turn[5][5];
 bool is_dead[MAXM];
 vector<pii> monster;
 vector<int> dir;
@@ -52,7 +52,7 @@ bool move_45(int curr) {
         return false;    
     }
     // 시체가 있는 경우
-    if(dead_cnt[nr][nc].size() > 0) {
+    if(dead_turn[nr][nc] > 0) {
         return false;
     }
     if(nr == packman.ff && nc == packman.ss) {
@@ -87,7 +87,7 @@ void dead(int r, int c) {
             is_dead[i] = true;
         }
     }
-    dead_cnt[r][c].push(pii(monster_cnt[r][c], 3)); // 2턴이 필요하다는데 정확한 예시가..
+    dead_turn[r][c] = 3;
     monster_cnt[r][c] = 0;
 }
 void move_packman() {
@@ -147,10 +147,6 @@ void move_packman() {
                 int eat3 = monster_cnt[nnnr][nnnc] + eat2;
                 monster_cnt[nnnr][nnnc] = 0;
                 if(max_eat == eat3) {
-                    // 로직을 잘못짰어...ㅋㅋ..
-                    monster_cnt[nr][nc] = eat1;
-                    monster_cnt[nnr][nnc] = eat2-eat1;
-                    monster_cnt[nnnr][nnnc] = eat3 - eat2;
                     dead(nr, nc);
                     dead(nnr, nnc);
                     dead(nnnr, nnnc);
@@ -173,22 +169,10 @@ void move_packman() {
 void manage_deads() {
     for(int i=1; i<=4; i++) {
         for(int j=1; j<=4; j++) {
-            if(dead_cnt[i][j].size() == 0) continue;
+            if(dead_turn[i][j] == 0) continue;
             
             //실제로 2턴동안 남아있는게 맞는지 테스트
-            queue<pii> new_q;
-            while(dead_cnt[i][j].size()) {
-                auto [a, b] = dead_cnt[i][j].front();
-                dead_cnt[i][j].pop();
-                
-                b--;
-                
-                if(b != 0) {
-                    new_q.push(pii(a, b));
-                }
-            }
-            
-            dead_cnt[i][j] = new_q;
+            dead_turn[i][j]--;
         }
     }
 }
