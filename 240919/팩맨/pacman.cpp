@@ -13,7 +13,7 @@ Code, Compile, Run and Debug online from anywhere in world.
 using namespace std;
 using pii = pair<int,int>;
 
-const int MAXM = 1e6+7;
+const int MAXM = 1e7+7;
 
 
 int m, t;
