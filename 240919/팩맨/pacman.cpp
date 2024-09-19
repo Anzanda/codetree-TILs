@@ -67,7 +67,7 @@ bool move_45(int curr) {
 }
 void move_monster(int curr) {
     // 8방향을 다 돌았는데도 불구하고 움직일 수 없다면...
-    for(int i=0; i<7; i++) {
+    for(int i=0; i<8; i++) {
         if(move_45(curr)) {
             break;
         } else {
@@ -83,6 +83,7 @@ void move_monsters() {
 }
 void dead(int r, int c) {
     for(int i=1; i<monster.size(); i++) {
+        if(is_dead[i]) continue;
         if(r == monster[i].ff && c == monster[i].ss) {
             is_dead[i] = true;
         }
@@ -124,6 +125,9 @@ void move_packman() {
         monster_cnt[nr][nc] += eat1;
     }
     // 다 끝났는데 max_eat가 -1이라면? 그럴리는 없다. 0임.
+    if(max_eat == 0) {
+        exit(-1);
+    }
     
     for(int i=0; i<4; i++) {
         int nr = r + dr[i];
@@ -197,6 +201,8 @@ void go_turn() {
     replicate();
     move_monsters();
     move_packman();
+    manage_deads();
+    hatch();
     // for(int i=1; i<monster.size(); i++) {
     //     if(is_dead[i]) {
     //         printf("monster%d is dead\n", i);
@@ -206,9 +212,6 @@ void go_turn() {
         
     //     printf("montser%d: (%d, %d) | %d\n", i, r, c, d);
     // }
-    // return;
-    manage_deads();
-    hatch();
     // for(int i=1; i<monster.size(); i++) {
     //     if(is_dead[i]) dead++;
     //     else live++;
