@@ -67,7 +67,7 @@ bool move_45(int curr) {
 }
 void move_monster(int curr) {
     // 8방향을 다 돌았는데도 불구하고 움직일 수 없다면...
-    for(int i=0; i<8; i++) {
+    for(int i=0; i<7; i++) {
         if(move_45(curr)) {
             break;
         } else {
