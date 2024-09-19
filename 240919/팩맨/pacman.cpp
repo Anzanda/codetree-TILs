@@ -82,13 +82,14 @@ void move_monsters() {
     }
 }
 void dead(int r, int c) {
+    if(monster_cnt[r][c] == 0) return;
     for(int i=1; i<monster.size(); i++) {
         if(is_dead[i]) continue;
         if(r == monster[i].ff && c == monster[i].ss) {
             is_dead[i] = true;
         }
     }
-    dead_turn[r][c] = 4;
+    dead_turn[r][c] = 3;
     monster_cnt[r][c] = 0;
 }
 void move_packman() {
@@ -148,6 +149,9 @@ void move_packman() {
                 int eat3 = monster_cnt[nnnr][nnnc] + eat2;
                 monster_cnt[nnnr][nnnc] = 0;
                 if(max_eat == eat3) {
+        monster_cnt[nr][nc] += eat1;
+            monster_cnt[nnr][nnc] += (eat2-eat1);
+                monster_cnt[nnnr][nnnc] += (eat3 - eat2);
                     dead(nr, nc);
                     dead(nnr, nnc);
                     dead(nnnr, nnnc);
