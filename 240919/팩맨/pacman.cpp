@@ -118,16 +118,13 @@ void move_packman() {
                 int eat3 = monster_cnt[nnnr][nnnc] + eat2;
                 monster_cnt[nnnr][nnnc] = 0;
                 max_eat = max(max_eat, eat3);
-                monster_cnt[nnnr][nnnc] += (eat3 - eat2);
+                monster_cnt[nnnr][nnnc] = (eat3 - eat2);
             }
-            monster_cnt[nnr][nnc] += (eat2 - eat1);
+            monster_cnt[nnr][nnc] = (eat2 - eat1);
         }
-        monster_cnt[nr][nc] += eat1;
+        monster_cnt[nr][nc] = eat1;
     }
     // 다 끝났는데 max_eat가 -1이라면? 그럴리는 없다. 0임.
-    if(max_eat == 0) {
-        exit(-1);
-    }
     
     for(int i=0; i<4; i++) {
         int nr = r + dr[i];
@@ -163,11 +160,11 @@ void move_packman() {
                     packman = pii(nnnr, nnnc);
                     return;
                 }
-                monster_cnt[nnnr][nnnc] += (eat3 - eat2);
+                monster_cnt[nnnr][nnnc] = (eat3 - eat2);
             }
             monster_cnt[nnr][nnc] = (eat2-eat1);
         }
-        monster_cnt[nr][nc] += eat1;
+        monster_cnt[nr][nc] = eat1;
     }
 }
 void manage_deads() {
