@@ -44,21 +44,21 @@ void move() {
             // error
             exit(-1);
         }
-        if(vst[moving[loc+1]] || a[moving[loc+1]] == 0) {
-            continue;
-        }
         if(loc == n) {
             vst[moving[loc]] = false;
             continue;
         }
-        
-        vst[moving[loc]] = false;
-        vst[moving[loc+1]] = true;
-        a[moving[loc+1]] -= 1;
-        if(loc+1 == n) {
-            vst[moving[loc+1]] = false;
+        if(vst[moving[loc+1]] || a[moving[loc+1]] == 0) {
             continue;
         }
+        
+        vst[moving[loc]] = false;
+        a[moving[loc+1]] -= 1;
+        if(loc+1 == n) {
+            continue;
+        }
+        
+        vst[moving[loc+1]] = true;
         new_q.push(moving[loc+1]);
     }
     while(new_q.size()) {
