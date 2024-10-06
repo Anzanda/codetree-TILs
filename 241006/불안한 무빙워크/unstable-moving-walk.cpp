@@ -12,7 +12,7 @@ Code, Compile, Run and Debug online from anywhere in world.
 #define endl '\n'
 using namespace std;
 
-const int MAXN = 10+7;
+const int MAXN = 100+7;
 
 int experiment = 0;
 int n, k;
@@ -22,8 +22,9 @@ bool vst[MAXN*2];
 queue<int> q;
 void rotate() {
     int tmp[MAXN*2];
+    tmp[1] = moving[2*n];
     for(int i=1; i<=2*n; i++) {
-        tmp[(i)%(2*n) + 1] = moving[i];
+        tmp[i+1] = moving[i];
     }
     memcpy(moving, tmp, sizeof moving);
     
