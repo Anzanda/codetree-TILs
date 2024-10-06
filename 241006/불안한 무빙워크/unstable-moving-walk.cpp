@@ -37,7 +37,6 @@ void rotate() {
         q.push(new_q.front());
         new_q.pop();
     }
-    
 }
 void move() {
     queue<int> new_q;
@@ -51,6 +50,7 @@ void move() {
             continue;
         }
         if(vst[moving[loc+1]] || a[moving[loc+1]] == 0) {
+            new_q.push(loc);
             continue;
         }
         
@@ -61,7 +61,7 @@ void move() {
         }
         
         vst[moving[loc+1]] = true;
-        new_q.push(moving[loc+1]);
+        new_q.push(loc+1);
     }
     while(new_q.size()) {
         q.push(new_q.front());
@@ -110,7 +110,7 @@ void print_q() {
 }
 void print_a() {
     for(int i=1; i<=2*n; i++) {
-        printf("%d ", a[i]);
+        printf("%d ", vst[i]);
     }
     printf("\n");
 }
