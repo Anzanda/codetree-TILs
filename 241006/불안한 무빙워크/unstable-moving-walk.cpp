@@ -26,24 +26,25 @@ void rotate() {
         tmp[(i)%(2*n) + 1] = moving[i];
     }
     memcpy(moving, tmp, sizeof moving);
+    
+    queue<int> new_q;
+    while(q.size()) {
+        new_q.push(q.front()+1);
+        q.pop();
+    }
+    while(new_q.size()) {
+        q.push(new_q.front());
+        new_q.pop();
+    }
+    
 }
 void move() {
     queue<int> new_q;
     while(q.size()) {
-        int curr = q.front();
+        int loc = q.front();
         q.pop();
         // 무빙워크 칸의 번호
         
-        int loc = -1;
-        for(int i=1; i<=n; i++) {
-           if(moving[i] == curr) {
-               loc = i;
-           } 
-        }
-        if(loc == -1) {
-            // error
-            exit(-1);
-        }
         if(loc == n) {
             vst[moving[loc]] = false;
             continue;
@@ -72,7 +73,7 @@ void add_human() {
     
     vst[moving[1]] = true;
     a[moving[1]] -= 1;
-    q.push(moving[1]);
+    q.push(1);
 }
 bool is_finished() {
     int cnt = 0;
