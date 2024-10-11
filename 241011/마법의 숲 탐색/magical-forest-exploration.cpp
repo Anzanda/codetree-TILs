@@ -30,7 +30,7 @@ bool is_exit[MAXN][MAXN];
 bool is_range(int r, int c) {
     return r>=1&&r<=n&&c>=1&&c<=m; // r은 0부터?
 }
-bool can_move(int r, int c) {
+bool can_move(int r, int c) { // -1부터 시작...
     if(vst[r][c]) return false;
     if(c == 1 || c == m) return false; // 골렘의 중심!!
     
@@ -38,6 +38,7 @@ bool can_move(int r, int c) {
         int nr = r + dr[i];
         int nc = c + dc[i];
         if(nr <= 0) continue;
+        if(nc < 1 || nc > m) return false;
         if(!is_range(nr, nc)) return false;
         if(vst[nr][nc]) return false;
     }
@@ -158,7 +159,7 @@ void print_current_golem(int curr) {
     printf("exit_dir: %d\n", exit_dir);
 }
 void go(int curr) {
-    loc = pii(0, c[curr]);
+    loc = pii(-1, c[curr]);
     exit_dir = d[curr];
     while(move()) {
         // print_current_golem(curr);
