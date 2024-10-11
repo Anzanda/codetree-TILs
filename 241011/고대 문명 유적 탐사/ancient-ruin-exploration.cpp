@@ -105,6 +105,7 @@ void print_a() {
         printf("\n");
     }
 }
+bool finished = false;
 pair<int, pii> find_candidate() {
     int max_score = -1;
     for(int i=2; i<=4; i++) {
@@ -118,7 +119,7 @@ pair<int, pii> find_candidate() {
     }
     
     if(max_score == 0) {
-        k = -1;
+        finished = true;
         return make_pair(-1, pii(-1,-1));
     }
     vector<pair<int, pii> > cands;
@@ -165,7 +166,8 @@ void add_tressure() {
 }
 void go() {
     pair<int, pii> cand = find_candidate();
-    if(k == -1) return;
+    // printf("k: %d\n", k);
+    if(finished) return;
     
     int r, c; tie(r, c) = cand.ss;
     for(int i=0; i<=cand.ff; i++) {
@@ -175,6 +177,7 @@ void go() {
     while(true) {
         int score = get_real_tressure();
         ans += score;
+        // printf("score: %d\n", score);
         if(score == 0) break;
         add_tressure();
         // print_a();
@@ -192,7 +195,7 @@ int main(void) {
     for(int i=1; i<=m; i++) {
         cin >> t[i];
     }
-    while(k--) {
+    while(k-- && !finished) {
         go();   
     }
 }
