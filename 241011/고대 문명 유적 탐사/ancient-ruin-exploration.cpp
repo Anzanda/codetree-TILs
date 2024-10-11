@@ -33,10 +33,10 @@ bool compare(pair<int, pii> &a, pair<int, pii> &b) {
     if(a.ff != b.ff) {
         return a.ff < b.ff;
     }
-    if(a.ss.ff != b.ss.ff) {
-        return a.ss.ff < b.ss.ff;
+    if(a.ss.ss != b.ss.ss) {
+        return a.ss.ss < b.ss.ss;
     }
-    return a.ss.ss < b.ss.ss;
+    return a.ss.ff < b.ss.ff;
 }
 void rotate_90(int r, int c) {
     int tmp[MAXN][MAXN];
